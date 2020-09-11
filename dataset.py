@@ -1,8 +1,11 @@
 import torch
 import cv2
 import os
+import pdb
 
 
+
+# dataset: each epoch only part of simulated!
 class SimulationMaskedFacesDataset_Classification(torch.utils.data.Dataset):
     def __init__(self,split_file, transforms=None):
         self.path_to_real_images_yesmask = '/Users/wzy/Desktop/mask/maskrecognition/self-built-masked-face-recognition-dataset/AFDB_masked_face_dataset'
@@ -42,6 +45,13 @@ class SimulationMaskedFacesDataset_Classification(torch.utils.data.Dataset):
         for number in os.listdir(self.path):
             for inst in os.listdir(os.path.join(self.path, number)):
                 self.samples.append((os.path.join(self.path,number,inst), 1))
+
+
+    def sample_simulated and all real
+        repopulate the list
+
+
+
 
 
 
@@ -86,8 +96,11 @@ class RealMaskedFacesDataset_Classification(torch.utils.data.Dataset):
 
 
     def __getitem__(self, index):
+        # pdb.set_trace()
         path_to_img, label = self.samples[index]
-        img = cv2.cvtColor(cv2.imread(path_to_img), cv2.COLOR_BGR2RGB)
+        img = cv2.imread(path_to_img)
+        # pdb.set_trace()
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         if self.transforms:
             img = self.transforms(img)
         # img = cv2.resize(img, (128,128), interpolation = cv2.INTER_AREA)
@@ -112,3 +125,6 @@ class RealMaskedFacesDataset_Classification(torch.utils.data.Dataset):
                     continue
                 for inst in os.listdir(os.path.join(path_, name)):
                     self.samples.append((os.path.join(path_,name,inst),label))
+
+
+
