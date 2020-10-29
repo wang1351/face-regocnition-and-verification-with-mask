@@ -34,4 +34,4 @@ class ResNet18(torch.nn.Module):
 
   def forward(self, images):
     features = self.base_model(images).view(images.shape[0],-1)
-    return self.preds(features)
+    return self.preds(features), features #features similar

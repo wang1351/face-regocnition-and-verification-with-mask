@@ -143,12 +143,14 @@ if __name__ == '__main__':
         transforms.Normalize(mean=[0.485, 0.456, 0.406],
                              std=[0.229, 0.224, 0.225]),
     ])
-    r2r_train_dataset = RealMaskedFacesDataset_Classification(split_file='toy.txt', transforms=train_transform)
-    r2r_val_dataset = RealMaskedFacesDataset_Classification(split_file='toyval.txt', transforms=val_transform)
+    r2r_train_dataset = RealMaskedFacesDataset_Classification(split_file='train.txt', transforms=train_transform)
+    r2r_val_dataset = RealMaskedFacesDataset_Classification(split_file='val.txt', transforms=val_transform)
     #pdb.set_trace()
 
     current_best_val_acc = 0
     model = ResNet18()
+
+    #load model!
     model = model.to(device)
 
     criterion = nn.CrossEntropyLoss()

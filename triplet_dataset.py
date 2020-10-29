@@ -16,21 +16,22 @@ class RealMaskedFacesDataset_Triplet(torch.utils.data.Dataset):
     def __getitem__(self, index):
         #get anchor
         path_to_anchor, label = self.samples[index]
+        # pdb.set_trace()
 
         #get a different label
-        negative_label = not label
-        # while negative_label==label:
-        #     negative_label = self.dict.keys()[random.randint(0, len(self.dict.keys()))]
+        negative_label = label
+        while negative_label==label:
+            negative_label = list(self.dict.keys())[random.randint(0, len(self.dict.keys()) -1)]
 
         #lst = [x for x in range(3)]
         #lst.remove(label), then pick
 
         #get different path same label as positive
 
-        path_to_positive, _ = self.dict[label][random.randint(0, len(self.dict[label]))]
+        path_to_positive = self.dict[label][random.randint(0, len(self.dict[label])-1)]
 
         #get different label img as negative
-        path_to_negative, _ = self.dict[negative_label][random.randint(0, len(self.dict[negative_label]))]
+        path_to_negative = self.dict[negative_label][random.randint(0, len(self.dict[negative_label])-1)]
 
         #return a tuple
         anchor, positive, negative = cv2.imread(path_to_anchor), cv2.imread(path_to_positive), cv2.imread(path_to_negative)
